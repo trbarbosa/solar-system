@@ -68,7 +68,7 @@ jobs:
             path: node_modules
             key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json')}}
         - name: Install Dependencies
-        
+
           run: npm install
         - name: Install dependencies
           run: npm install
@@ -83,3 +83,4 @@ jobs:
             name: Code-Coverage-Result
             path: coverage
             retention-days: 5
+            
