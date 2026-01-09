@@ -85,6 +85,9 @@ jobs:
             retention-days: 5
             
     docker:
+      permissions:
+        contents: read
+        packages: write
       name: Containerization
       needs: [unit-testing, code-coverage]
       runs-on: ubuntu-latest
@@ -128,7 +131,7 @@ jobs:
           echo Testando a URL da imagem usando wget
           wget -q -O - 127.0.0.1:3000/live | grep live
 
-      - name: Fazendo o push da imagem pro DockerHub
+      - name: Fazendo o push da imagem pro Container Registry
         uses: docker/build-push-action@v6
         with:
           context: .
