@@ -169,7 +169,7 @@ jobs:
           uses: actions/checkout@v6
 
         - name: Instalar o kubectl
-          uses: azure/setup-kubectl@v4 # na aula era 3
+          uses: azure/setup-kubectl@v3 # na aula era 3
           with:
             version: '1.26.0' # versão usada pelo professor
           #id: install
