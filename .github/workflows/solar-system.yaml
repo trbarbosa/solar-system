@@ -185,3 +185,18 @@ jobs:
             kubectl version
             echo ""
             kubectl get nodes
+
+        - name: Obtendo ip do ingress
+          run: k -n ingress-nginx get svc ingress-nginx-controller
+
+        #- name: Substitui token nos arquivos do kubernetes
+        #  uses: cschleiden/replace-tokens@v1
+        #  with:
+        #    tokenPrefix: '_{_'
+        #    tokenSuffix: '_}_'
+        #    files: '["kubernetes/development/*.yaml"]'
+        #  env:
+        #    NAMESPACE: ${{ vars.NAMESPACE }}
+        #    REPLICAS: ${{ vars.REPLICAS }}
+        #    IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
+        #    INGRESS_IP: ${{  }}
