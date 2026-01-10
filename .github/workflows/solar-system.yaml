@@ -172,7 +172,7 @@ jobs:
           uses: azure/setup-kubectl@v4 # na aula era 3
           with:
             version: 'v1.32.0' # versão usada pelo professor
-          #id: install
+          id: install
 
         - name: Obtendo informações do cluster
           run: | 
