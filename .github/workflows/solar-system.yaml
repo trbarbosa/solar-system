@@ -186,8 +186,10 @@ jobs:
             echo ""
             kubectl get nodes
 
-        - name: Obtendo ip do ingress
-          run: kubectl get svc -A
+        - name: Habilitando ingress no minikube e pegando o ip
+          run: |
+            minikube addons enable ingress
+            kubectl get svc -A
 
         #- name: Substitui token nos arquivos do kubernetes
         #  uses: cschleiden/replace-tokens@v1
