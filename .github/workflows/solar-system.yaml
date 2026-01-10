@@ -186,19 +186,17 @@ jobs:
             echo ""
             kubectl get nodes
 
-        - name: Habilitando ingress no minikube e pegando o ip
-          run: |
-            minikube addons enable ingress
-            kubectl get svc -A
+        - name: Obtendo o ip do ingress
+          run: kubectl get svc nginx-ingress-controller-admission
 
-        #- name: Substitui token nos arquivos do kubernetes
-        #  uses: cschleiden/replace-tokens@v1
-        #  with:
-        #    tokenPrefix: '_{_'
-        #    tokenSuffix: '_}_'
-        #    files: '["kubernetes/development/*.yaml"]'
-        #  env:
-        #    NAMESPACE: ${{ vars.NAMESPACE }}
-        #    REPLICAS: ${{ vars.REPLICAS }}
-        #    IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
-        #    INGRESS_IP: ${{  }}
+        - name: Substitui token nos arquivos do kubernetes
+          uses: cschleiden/replace-tokens@v1
+          with:
+            tokenPrefix: '_{_'
+            tokenSuffix: '_}_'
+            files: '["kubernetes/development/*.yaml"]'
+          env:
+            NAMESPACE: ${{ vars.NAMESPACE }}
+            REPLICAS: ${{ vars.REPLICAS }}
+            IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
+            INGRESS_IP: ${{ 10.106.147.99 }}
