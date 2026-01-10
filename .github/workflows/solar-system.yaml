@@ -187,7 +187,7 @@ jobs:
             kubectl get nodes
 
         - name: Obtendo ip do ingress
-          run: k -n ingress-nginx get svc ingress-nginx-controller
+          run: kubectl -n ingress-nginx get svc ingress-nginx-controller
 
         #- name: Substitui token nos arquivos do kubernetes
         #  uses: cschleiden/replace-tokens@v1
