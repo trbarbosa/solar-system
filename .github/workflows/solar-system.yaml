@@ -209,12 +209,12 @@ jobs:
         #- name: Vendo os arquivos do diretório kubernetes/development
         #  run: cat kubernetes/development/*.yaml
         - name: Checkout Repo
-           uses: actions/checkout@v4     
+          uses: actions/checkout@v4     
 
-         - name: Install kubectl CLI
-           uses: azure/setup-kubectl@v4
-           with:
-               version: 'latest' # default is latest stable
+        - name: Install kubectl CLI
+          uses: azure/setup-kubectl@v4
+          with:
+            version: 'latest' # default is latest stable
 
         # - name: Set Kubeconfig
          #  uses: azure/k8s-set-context@v4
@@ -222,14 +222,14 @@ jobs:
            # method: kubeconfig
            #  kubeconfig: ${{ secrets.KUBECONFIG }}
 
-         - name: Setup Minikube
-           uses: manusa/actions-setup-minikube@v2.11.0
-           with:
-              minikube version: 'v1.32.0'
-              kubernetes version: 'v1.28.3'
+        - name: Setup Minikube
+          uses: manusa/actions-setup-minikube@v2.11.0
+          with:
+            minikube version: 'v1.32.0'
+            kubernetes version: 'v1.28.3'
 
-         - name:  Fetch Kubernetes Cluster Details
-           run: |
+        - name:  Fetch Kubernetes Cluster Details
+          run: |
             kubectl version 
             echo ------------------------------------------
             kubectl get nodes
@@ -240,24 +240,24 @@ jobs:
             echo ----------------------------------------------
             minikube ip
             
-         - name: Save NGINX Ingress Controller of Minikube cluster
-           run: |
+        - name: Save NGINX Ingress Controller of Minikube cluster
+          run: |
              echo "INGRESS_IP=$( minikube ip )"  >> $GITHUB_ENV
 
             
 
-         - name: Replace tokens in manifest files
-           uses: cschleiden/replace-tokens@v1
-           with:
+        - name: Replace tokens in manifest files
+          uses: cschleiden/replace-tokens@v1
+          with:
             tokenPrefix: '{'
             tokenSuffix: '}'
             files: '["kubernetes/development/*.yaml"]'
-           env:
+          env:
              NAMESPACE: ${{ vars.NAMESPACE }}
              REPLICAS: ${{ vars.REPLICAS }}
              IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
              INGRESS_IP: ${{ env.INGRESS_IP }}
 
-         - name: check files
-           run: |
-             cat kubernetes/development/*.yaml
+        - name: check files
+          run: |
+            cat kubernetes/development/*.yaml
