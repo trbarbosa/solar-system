@@ -186,7 +186,7 @@ jobs:
             echo ""
             kubectl get nodes
             echo ""
-            minikube addos enable ingress
+            minikube addons enable ingress
             echo ""
             minikube ip
 
