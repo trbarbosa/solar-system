@@ -192,7 +192,7 @@ jobs:
 
         - name: Salva ip do ingress
           run: |
-            echo "INGRESS_IP"=$(minikube ip) >> $GITHUB_ENV
+            echo "INGRESS_IP=$(minikube ip)" >> $GITHUB_ENV
 
         - name: Substitui token nos arquivos do kubernetes
           uses: cschleiden/replace-tokens@v1
