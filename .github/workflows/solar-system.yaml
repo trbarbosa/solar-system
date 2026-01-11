@@ -165,62 +165,14 @@ jobs:
       runs-on: ubuntu-22.04
       steps:
         
-        #- name: Checkout Repository
-        #  uses: actions/checkout@v6
-#
-        #- name: Instalar o kubectl
-        #  uses: azure/setup-kubectl@v4 # na aula era 3
-        #  with:
-        #    version: 'v1.32.0' # versão usada pelo professor
-        #  id: install
-#
-        #- name: Setup Minikube
-        #  uses: manusa/actions-setup-minikube@v2.11.0
-        #  with:
-        #    minikube version: 'v1.32.0'
-        #    kubernetes version: 'v1.28.3'
-#
-        #- name: Obtendo informações do cluster
-        #  run: | 
-        #    kubectl version
-        #    echo ""
-        #    kubectl get nodes
-        #    echo ""
-        #    minikube addons enable ingress
-        #    echo ""
-        #    minikube ip
-#
-        #- name: Salva ip do ingress
-        #  run: |
-        #    echo "INGRESS_IP=$(minikube ip)" >> $GITHUB_ENV
-#
-        #- name: Substitui token nos arquivos do kubernetes
-        #  uses: cschleiden/replace-tokens@v1
-        #  with:
-        #    tokenPrefix: '{'
-        #    tokenSuffix: '}'
-        #    files: '["kubernetes/development/*.yaml"]'
-        #  env:
-        #    NAMESPACE: ${{ vars.NAMESPACE }}
-        #    REPLICAS: ${{ vars.REPLICAS }}
-        #    IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
-        #    INGRESS_IP: ${{ env.INGRESS_IP }}
-#
-        #- name: Vendo os arquivos do diretório kubernetes/development
-        #  run: cat kubernetes/development/*.yaml
-        - name: Checkout Repo
-          uses: actions/checkout@v4     
+        - name: Checkout Repository
+          uses: actions/checkout@v6
 
-        - name: Install kubectl CLI
-          uses: azure/setup-kubectl@v4
+        - name: Instalar o kubectl
+          uses: azure/setup-kubectl@v4 # na aula era 3
           with:
-            version: 'latest' # default is latest stable
-
-        # - name: Set Kubeconfig
-         #  uses: azure/k8s-set-context@v4
-          # with:
-           # method: kubeconfig
-           #  kubeconfig: ${{ secrets.KUBECONFIG }}
+            version: 'v1.32.0' # versão usada pelo professor
+          id: install
 
         - name: Setup Minikube
           uses: manusa/actions-setup-minikube@v2.11.0
@@ -228,39 +180,28 @@ jobs:
             minikube version: 'v1.32.0'
             kubernetes version: 'v1.28.3'
 
-        - name:  Fetch Kubernetes Cluster Details
-          run: |
-            kubectl version 
-            echo ------------------------------------------
+        - name: Obtendo informações do cluster
+          run: | 
+            kubectl version
+            echo ""
             kubectl get nodes
-            echo ------------------------------------------
-            kubectl get ingress
-            echo -----------------------------------------
+            echo ""
             minikube addons enable ingress
-            echo ----------------------------------------------
+            echo ""
             minikube ip
-            
-        - name: Save NGINX Ingress Controller of Minikube cluster
+
+        - name: Salva ip do ingress
           run: |
-             echo "INGRESS_IP=$( minikube ip )"  >> $GITHUB_ENV
+            echo "INGRESS_IP=$(minikube ip)" >> $GITHUB_ENV
 
-            
-
-        - name: Replace tokens in manifest files
+        - name: Substitui token nos arquivos do kubernetes
           uses: cschleiden/replace-tokens@v1
           with:
             tokenPrefix: '_{_'
             tokenSuffix: '_}_'
             files: '["kubernetes/development/*.yaml"]'
           env:
-             NAMESPACE: ${{ vars.NAMESPACE }}
-             REPLICAS: ${{ vars.REPLICAS }}
-             IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
-             INGRESS_IP: ${{ env.INGRESS_IP }}
-
-        - name: check files
-          run: |
-            cat kubernetes/development/*.yaml
-
-        - name: Create development namespace
-          run: kubectl create namespace development
+            NAMESPACE: ${{ vars.NAMESPACE }}
+            REPLICAS: ${{ vars.REPLICAS }}
+            IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
+            INGRESS_IP: ${{ env.INGRESS_IP }}
