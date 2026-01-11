@@ -185,9 +185,12 @@ jobs:
             kubectl version
             echo ""
             kubectl get nodes
+            echo ""
+            minikube ip
 
-        #- name: Obtendo o ip do ingress
-        #  run: kubectl get svc nginx-ingress-controller-admission
+        - name: Salva ip do ingress
+          run: |
+            echo "INGRESS_IP"=$(minikube ip) >> $GITHUB_ENV
 
         - name: Substitui token nos arquivos do kubernetes
           uses: cschleiden/replace-tokens@v1
@@ -199,4 +202,7 @@ jobs:
             NAMESPACE: ${{ vars.NAMESPACE }}
             REPLICAS: ${{ vars.REPLICAS }}
             IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/solar-system:${{ github.sha }}
-            INGRESS_IP: 10.106.147.99
+            INGRESS_IP: ${{ env.GITHUB_ENV }}
+
+        - name: Vendo os arquivos do diretório kubernetes/development
+          run: cat kubernetes/development/*.yaml
