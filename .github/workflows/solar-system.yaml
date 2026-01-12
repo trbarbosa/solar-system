@@ -220,6 +220,9 @@ jobs:
             --from-literal=MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} \
             --dry-run=client \
             -o yaml | kubectl apply -f -
+
+        - name: Esperando os pods subirem
+          run: slep 120
         
         - name: Deploy no ambiente DEV
           run: |
