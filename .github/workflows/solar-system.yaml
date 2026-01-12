@@ -209,6 +209,9 @@ jobs:
         - name: Lendo o conteúdo dos arquivos
           run: cat kubernetes/development/*.yaml
 
+        - name: Criando o namespace development
+          run: kubectl create namespace development
+
         - name: Criando a secret do mongoDB
           run: |
             kubectl -n ${{ vars.NAMESPACE }} create secret generic mongo-db-creds \
