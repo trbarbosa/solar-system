@@ -222,7 +222,7 @@ jobs:
             -o yaml | kubectl apply -f -
 
         - name: Esperando os pods subirem
-          run: slep 120
+          run: sleep 120
         
         - name: Deploy no ambiente DEV
           run: |
