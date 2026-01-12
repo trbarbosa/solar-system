@@ -225,3 +225,6 @@ jobs:
         - name: Deploy no ambiente DEV
           run: |
             kubectl apply -f kubernetes/development/
+
+        - name: Obtendo a url do ingress
+          run: kubectl get ingress -n development
